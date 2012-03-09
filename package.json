@@ -1,0 +1,14 @@
+{
+    "name": "lil-brother"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "nomnom": "> 1.x.x",
+      "uglify-js": "> 1.x.x"
+  }
+  , "engine": {	
+    "node": "= 0.4.x"
+  }
+  , "bin": { "lilbro": "bin/lilbro" }
+  , "main": "lib/lilbro"
+}

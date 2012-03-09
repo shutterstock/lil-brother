@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Devent - 'Lil Bro'</title>
+	</head>
+	<body>
+		<div class="container" id="lil_bro">
+		<header>
+			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+			<script type="text/javascript">
+			// these could come from a server page load, ensuring everyone
+			// agrees on the same order of events
+			var keyMap  = {
+				event_type: 0,
+				version: 1,
+				timestamp: 2,
+				visitor_id: 3,
+				visit_id: 4,
+				element_id: 5,
+				test_variants: 6,
+				member_since: 7
+			};
+
+			var typeMap = {
+				click: 1,
+				change: 2,
+				search: 3
+			};
+
+			// and we can set up a data structure that contains information
+			// that the server retrieved from long term storage to send
+			// along with our clicks
+			var eventBase = {
+				version: '0.1a',
+				test_variants: '1,2,3',
+				member_since: '2008-12-31'
+			};
+			</script>
+			<nav>
+				<ul><li>here</li><li>there</li></ul>
+			</nav>
+		</header>
+		<article id="one">
+			<h1 class="one two">Aricle One</h1>
+		</article>
+		<article>
+			<h1 id="two"><a href="sample.html">Aricle Two</a></h1>
+		</article>
+		<article id="three">
+			<h1>Aricle Three</h1>
+			<form>
+				1:<input type="checkbox" name="check" value="one">
+				2:<input type="checkbox" name="check" value="two">
+				<br>
+				1:<input type="radio" name="radio" value="one">
+				2:<input type="radio" name="radio" value="two">
+				<br>
+				<select>
+					<option name="select" value="one">one</option>
+					<option name="select" value="two">two</option>
+					<option name="select" value="three">three</option>
+				</select>
+				<br>
+				username: <input id="username" type="text" name="username"
+				password: <input type="password" name="password">
+				<input type="submit" name="submit">
+				<br>
+				search: <input id="search_term" type="text" name="search">
+				<span id="search_button" name="search">search</span>
+				<br>
+			</form>
+		</article>
+		<footer>
+			<script type="text/javascript" src="src/LilBro.js"></script>
+			<script type="text/javascript" src="src/LilBro.BrowserDetect.js"></script>
+			<script type="text/javascript" src="src/LilBro.Schema.js"></script>
+			<script type="text/javascript">
+
+				var lilBro = new LilBro({
+					element: document.getElementById('lil_bro'),
+					server: '127.0.0.1:8000',
+					server_ssl: '127.0.0.1:8443',
+					//server: '10.0.2.2:8000',
+					//server_ssl: '10.0.2.2:8443',
+					watch_focus: true
+
+					// use the default key and type maps from the library,
+					// without any event pre-filling (event_base)
+					// key_map: keyMap,
+					// type_map: typeMap,
+					// event_base: eventBase
+				});
+
+				lilBro.watch({
+					element: document.getElementById('search_button'),
+					callback: function(e) {
+						e.set('element_value', document.getElementById('search_term').value || '');
+						e.set('event_type', 'search');
+					}
+				});
+
+				lilBro.write({
+					'event_type': 'page_load'
+				});
+			</script>
+		</footer>
+	</body>
+	</div>
+</html>

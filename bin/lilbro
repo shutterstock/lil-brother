@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+
+var lilbro = require('../lib/lilbro')
+	, nomnom = require('nomnom');
+
+var opts = nomnom.opts({
+	'png-bug': {
+		string: '--png-bug',
+		default: './data/b.png'
+	},
+	'https-port': {
+		string: '--https-port',
+		default: false
+	},
+	'https-key': {
+		string: '--https-key',
+		default: './data/test-cert/privatekey.pem'
+	},
+	'https-cert': {
+		string: '--https-cert',
+		default: './data/test-cert/certificate.pem'
+	},
+	'http-port': {
+		string: '--http-port',
+		default: 8000
+	},
+	'devent-host': {
+		string: '--devent-host',
+		default: 'prod-deventforwarder01.nyc01'
+	},
+	'devent-port': {
+		string: '--devent-port',
+		default: 7664
+	},
+	'devent-topic': {
+		string: '--devent-topic',
+		default: 'lilbro'
+	},
+	'client-js-path': {
+		string: '--client-js-path',
+		default: './client/src/'
+	}
+}).parseArgs();
+
+lilbro.setOpts(opts);
+
+var http_port = process.env.HTTP_PORT || opts['http-port'];
+lilbro.server.listen(http_port);
+console.log("listening on http port %d", http_port);
+
+var https_port = process.env.HTTPS_PORT || opts['https-port'];
+if (https_port) {
+	lilbro.secure_server.listen(https_port);
+	console.log("listening on https port %d", https_port);
+}
