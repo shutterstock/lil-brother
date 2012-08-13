@@ -4,35 +4,44 @@ Li'l Brother tracks clicks on web pages, without blocking any interaction.
 
 ## Client
 
-    <script type="text/javascript" src="http://server/lilbro.js"></script>
-    <script type="text/javascript">
-    	// listen for click and change events on the wrapper element
-    	var lilBro = new LilBro({
-    		element: document.getElementById('lil_bro'),
-    		server: 'server:8080',
-    		ssl_server: 'server:8443',
-    		track_focus: true
-    	});
-    
-    	// register a click handler that snakes some data from the DOM,
-    	// and specifies the the event type.
-    	// This wont bubble to the wrapper element being watched.
-    	lilBro.watch({
-    		element: document.getElementById('search_button'),
-    		callback: function(e) {
-    			e.set(
-    				'element_value',
-    				document.getElementById('search_term').value
-    			);
-    			e.set('event_type', 'search');
-    		}
-    	});
-    
-    	// fire an event right now.
-    	lilBro.write({
-    		'event_type': 'page_load'
-    	});
-    </script>
+Include the library:
+```
+<script type="text/javascript" src="http://server/lilbro.js"></script>
+```
+
+Listen for clicks on the body:
+```javascript
+var lilBro = new LilBro({
+  element: document.body,
+  server: 'server:8080',
+  ssl_server: 'server:8443',
+  track_focus: true
+});
+```
+
+Alternatively, listen for a specific event, and annotate the message with custom data:
+
+```javascript
+// register a click handler that snakes some data from the DOM,
+// and specifies the the event type.
+// This wont bubble to the wrapper element being watched.
+lilBro.watch({
+  element: document.getElementById('search_button'),
+  callback: function(e) {
+    e.set(
+      'element_value',
+      document.getElementById('search_term').value
+    );
+   	e.set('event_type', 'search');
+  }
+});
+```
+
+Or fire an event, right now:
+
+```javascript
+lilBro.write({event_type: 'page_load'});
+```
 
 ## Server
 
