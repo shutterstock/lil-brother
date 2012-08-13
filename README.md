@@ -13,7 +13,7 @@ Listen for clicks on the body:
 ```javascript
 var lilBro = new LilBro({
   element: document.body,
-  server: 'server:8080',
+  server: 'server:8000',
   ssl_server: 'server:8443',
   track_focus: true
 });
