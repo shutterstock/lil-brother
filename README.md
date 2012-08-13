@@ -45,7 +45,11 @@ lilBro.write({event_type: 'page_load'});
 
 ## Server
 
-cd lil_brother/server && ./bin/lilbro
+First set up [devent-router](https://github.com/shutterstock/devent-router) and [devent-forwarder](https://github.com/shutterstock/devent-forwarder).  Then start up the listener:
+
+```
+bin/lilbro --devent-host mydeventforwarder
+```
 
 ## Authors
 
