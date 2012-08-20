@@ -39,10 +39,18 @@ var opts = nomnom.opts({
 	'client-js-path': {
 		string: '--client-js-path',
 		default: './client/src/'
+	},
+	'writer': {
+		string: '--writer',
+		default: 'devent_forwarder'
+	},
+	'output-file': {
+		string: '--output-file',
+		default: false
 	}
 }).parseArgs();
 
-lilbro.setOpts(opts);
+lilbro.initialize(opts);
 
 var http_port = process.env.HTTP_PORT || opts['http-port'];
 lilbro.server.listen(http_port);
