@@ -42,7 +42,7 @@ var opts = nomnom.opts({
 	},
 	'writer': {
 		string: '--writer',
-		default: 'devent_forwarder'
+		default: 'devent-forwarder'
 	},
 	'output-file': {
 		string: '--output-file',
