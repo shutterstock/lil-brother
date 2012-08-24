@@ -42,7 +42,7 @@ var opts = nomnom.opts({
 	}
 }).parseArgs();
 
-lilbro.setOpts(opts);
+lilbro.initialize(opts);
 
 var http_port = process.env.HTTP_PORT || opts['http-port'];
 lilbro.server.listen(http_port);
