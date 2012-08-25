@@ -26,7 +26,7 @@ var opts = nomnom.opts({
 	},
 	'devent-host': {
 		string: '--devent-host',
-		default: 'prod-deventforwarder01.nyc01'
+		default: '127.0.0.1'
 	},
 	'devent-port': {
 		string: '--devent-port',
@@ -42,11 +42,11 @@ var opts = nomnom.opts({
 	},
 	'writer': {
 		string: '--writer',
-		default: 'devent-forwarder'
+		default: 'file'
 	},
 	'output-file': {
 		string: '--output-file',
-		default: false
+		default: undefined
 	}
 }).parseArgs();
 
