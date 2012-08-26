@@ -73,7 +73,7 @@ Options:
 
 #### Devent
 
-To write to Devent, use `--writer devent-zmq` or '--writer devent-forwarder`.  See [devent-router](https://github.com/shutterstock/devent-router) and [devent-forwarder](https://github.com/shutterstock/devent-forwarder).
+To write to Devent, use `--writer devent-zmq` or `--writer devent-forwarder`.  See [devent-router](https://github.com/shutterstock/devent-router) and [devent-forwarder](https://github.com/shutterstock/devent-forwarder).
 
 ## Authors
 
