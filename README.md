@@ -45,11 +45,35 @@ lilBro.write({event_type: 'page_load'});
 
 ## Server
 
-First set up [devent-router](https://github.com/shutterstock/devent-router) and [devent-forwarder](https://github.com/shutterstock/devent-forwarder).  Then start up the listener:
+Start up the node listener and write events to a log file:
 
 ```
-$ bin/lilbro --devent-host mydeventforwarder
+$ bin/lilbro --output-file lilb.log
 ```
+
+#### Usage Options
+
+```
+Usage: node lilbro [options]
+
+Options:
+   --png-bug FILE                                path to the image file to return to clients
+   --https-port PORT                             port to listen for https connections
+   --https-key FILE                              path to the file containing the private key
+   --https-cert FILE                             path to the file containing the secure certificate
+   --http-port PORT                              port to listen on
+   --devent-host HOST                            devent hostname
+   --devent-port PORT                            devent port
+   --devent-topic STRING                         devent topic to write events to when writing to devent
+   --client-js-path DIR                          path to find client library sources
+   --writer [file|devent-zmq|devent-forwarder]   method to use for writing events
+   --output-file FILE                            path to log to when writing events to file
+
+```
+
+#### Devent
+
+To write to Devent, use `--writer devent-zmq` or `--writer devent-forwarder`.  See [devent-router](https://github.com/shutterstock/devent-router) and [devent-forwarder](https://github.com/shutterstock/devent-forwarder).
 
 ## Authors
 
