@@ -54,6 +54,8 @@ $ bin/lilbro --output-file lilb.log
 #### Usage Options
 
 ```
+$ bin/lilbro --help
+
 Usage: node lilbro [options]
 
 Options:
