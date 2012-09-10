@@ -12,8 +12,16 @@ LilBro = function(args) {
 			this.watch_container(args.element, args.watch_focus);
 
 			this.freshEvent = function () {
+				var base = {};
+				if(args.event_base){
+					for(var p in args.event_base){
+						if(args.event_base.hasOwnProperty(p)){
+							base[p] = args.event_base[p];
+						}
+					}
+				}
 				return new LilBro.Event({
-					base: args.event_base || {},
+					base: base,
 					key_map: args.key_map || LilBro.Schema.key_map,
 					type_map: args.type_map || LilBro.Schema.type_map,
 					server: args.server,
