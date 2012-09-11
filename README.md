@@ -43,6 +43,32 @@ Or fire an event, right now:
 lilBro.write({event_type: 'page_load'});
 ```
 
+### LilBro Options
+
+##### element
+
+Reference to top-level container element to monitor for events. 
+
+##### server
+
+Server to communicate with over HTTP calls.
+
+##### server_ssl
+
+Server to communicate with over HTTPS calls.
+
+##### visit_id_cookie, visitor_id_cookie
+
+Custom cookie names for visit and visitor cookies. Defaults to `visit_id` and `visitor_id`. 
+
+##### watch_focus
+
+If set to true, will log focus/blur events that occur.
+
+##### event_base
+
+Optional base template object for events; useful for attatching extra metadata.
+
 ## Server
 
 Start up the node listener and write events to a log file:
