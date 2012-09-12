@@ -18,31 +18,6 @@ var lilBro = new LilBro({
   track_focus: true
 });
 ```
-
-Alternatively, listen for a specific event, and annotate the message with custom data:
-
-```javascript
-// register a click handler that snakes some data from the DOM,
-// and specifies the the event type.
-// This wont bubble to the wrapper element being watched.
-lilBro.watch({
-  element: document.getElementById('search_button'),
-  callback: function(e) {
-    e.set(
-      'element_value',
-      document.getElementById('search_term').value
-    );
-   	e.set('event_type', 'search');
-  }
-});
-```
-
-Or fire an event, right now:
-
-```javascript
-lilBro.write({event_type: 'page_load'});
-```
-
 ### LilBro Options
 
 ##### element
@@ -69,12 +44,38 @@ If set to true, will log focus/blur events that occur.
 
 Optional base template object for events; useful for attatching extra metadata.
 
+### LilBro Methods
+
+##### write({ event_type: ..., ... }) 
+
+Write an event to the server.  Parameters are merged in with the event on its way out.  For example, to fire off a page load event:
+
+```javascript
+lilBro.write({event_type: 'page_load'});
+```
+
+##### watch({ element: ..., callback: ... })
+
+Listen for a specific event, and annotate the message with custom data.  For example:
+
+```javascript
+// register a click handler that snakes some data from the DOM and specifies the the event type.
+// this wont bubble to the wrapper element being watched.
+lilBro.watch({
+  element: document.getElementById('search_button'),
+  callback: function(e) {
+    e.set('element_value', document.getElementById('search_term').value);
+    e.set('event_type', 'search');
+  }
+});
+```
+
 ## Server
 
 Start up the node listener and write events to a log file:
 
 ```
-$ bin/lilbro --output-file lilb.log
+$ bin/lilbro --output-file events.log
 ```
 
 #### Usage Options
@@ -102,6 +103,26 @@ Options:
 #### Devent
 
 To write to Devent, use `--writer devent-zmq` or `--writer devent-forwarder`.  See [devent-router](https://github.com/shutterstock/devent-router) and [devent-forwarder](https://github.com/shutterstock/devent-forwarder).
+
+## Event Context
+
+#### Clicks
+
+When a click happens, we gather what context we can and send that along with the event.  If the target element has an `id` and/or a `class`, we note that.  Otherwise, we traverse up the DOM until we find a parent’s `id` or `class`.  We also grab the element tag name, X and Y mouse coordinates relative to the element and to the page, scroll positions, and input values if the element happened to be some sort of input field.
+
+In addition to metadata around the event, we discover other attributes too: browser version, operating system, viewport width and height, request path, and some other bits.
+
+#### Visits and Visitors
+
+Of course clicks are part of larger hierarchy.  There are users behind these clicks, and users browse in sessions.  To tie events together, Lil Brother sets two cookies: a long-lived `visitor` cookie, and a short-lived `visit` cookie.  We send the values of these cookies along so that we can string events together and aggregate later.
+
+## Event Schemas
+
+To create the smallest request possible when writing events, Lil Brother de-couples the key-value pairs into a SOH-delimited list comprised of the values in the order specified in the schema's `key_map`. These values are sent to the server via an image request, which re-assembles the list back into key-value pairs and forwards the data to a backend writer.  Both the client code and server code require access to a schema file which allows them to disassemble the data and re-assemble them in the correct order.
+
+Lil Brother comes with a [default schema](client/src/LilBro.Schema.js) which includes attributes for context around the click and context around the visit and visitor and their browser.  
+
+To create additional or multiple schemas, add them under `client/src` with the naming scheme `LilBro.Schema.__VERSION__.js`, and then load the client library with a query string parameter that refers to that version with `?v=__VERSION__`.
 
 ## Authors
 
