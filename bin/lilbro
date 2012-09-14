@@ -1,48 +1,85 @@
 #!/usr/bin/env node
 
+var fs = require('fs');
+
 var lilbro = require('../lib/lilbro')
 	, nomnom = require('nomnom');
 
+var writerFiles = fs.readdirSync(__dirname + '/../lib/writers');
+var writers = writerFiles.map( function(f) { return f.replace(/\.js$/, '') });
+
 var opts = nomnom.opts({
 	'png-bug': {
-		string: '--png-bug',
-		default: './data/b.png'
+		full: 'png-bug',
+		default: './data/b.png',
+		help: 'path to the image file to return to clients',
+		metavar: 'FILE'
 	},
 	'https-port': {
-		string: '--https-port',
-		default: false
+		full: 'https-port',
+		default: false,
+		help: 'port to listen for https connections',
+		metavar: 'PORT'
 	},
 	'https-key': {
-		string: '--https-key',
-		default: './data/test-cert/privatekey.pem'
+		full: 'https-key',
+		default: './data/test-cert/privatekey.pem',
+		help: 'path to the file containing the private key',
+		metavar: 'FILE'
 	},
 	'https-cert': {
-		string: '--https-cert',
-		default: './data/test-cert/certificate.pem'
+		full: 'https-cert',
+		default: './data/test-cert/certificate.pem',
+		help: 'path to the file containing the secure certificate',
+		metavar: 'FILE'
 	},
 	'http-port': {
-		string: '--http-port',
-		default: 8000
+		full: 'http-port',
+		default: 8000,
+		help: 'port to listen on',
+		metavar: 'PORT'
 	},
 	'devent-host': {
-		string: '--devent-host',
-		default: 'prod-deventforwarder01.nyc01'
+		full: 'devent-host',
+		default: '127.0.0.1',
+		help: 'devent hostname',
+		metavar: 'HOST'
 	},
 	'devent-port': {
-		string: '--devent-port',
-		default: 7664
+		full: 'devent-port',
+		default: 7664,
+		help: 'devent port',
+		metavar: 'PORT'
 	},
 	'devent-topic': {
-		string: '--devent-topic',
-		default: 'lilbro'
+		full: 'devent-topic',
+		default: 'lilbro',
+		help: 'devent topic to write events to when writing to devent',
+		metavar: 'STRING'
 	},
 	'client-js-path': {
-		string: '--client-js-path',
-		default: './client/src/'
+		full: 'client-js-path',
+		default: './client/src/',
+		help: 'path to find client library sources',
+		metavar: 'DIR'
+	},
+	'writer': {
+		file: 'writer',
+		default: 'file',
+		metavar: '[' + writers.join('|') + ']',
+		choices: writers,
+		help: 'method to use for writing events'
+	},
+	'output-file': {
+		full: 'output-file',
+		default: 'lilb.log',
+		help: 'path to log to when writing events to file',
+		metavar: 'FILE'
 	}
+
 }).parseArgs();
 
-lilbro.setOpts(opts);
+lilbro.initialize(opts);
 
 var http_port = process.env.HTTP_PORT || opts['http-port'];
 lilbro.server.listen(http_port);
