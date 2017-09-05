@@ -1,17 +1,20 @@
 {
-    "name": "lil-brother"
-  , "version": "0.0.1"
-  , "private": true
-  , "optionalDependencies": {
-      "zmq": "= 2.0.0"
-  }
-  , "dependencies": {
-      "nomnom": "> 1.x.x",
-      "uglify-js": "> 1.x.x"
-  }
-  , "engine": {
+  "name": "lil-brother",
+  "version": "0.0.1",
+  "private": true,
+  "optionalDependencies": {
+    "zmq": "= 2.0.0"
+  },
+  "dependencies": {
+    "nomnom": "> 1.x.x",
+    "uglify-js": "> 1.x.x"
+  },
+  "engine": {
     "node": ">= 0.6.x"
-  }
-  , "bin": { "lilbro": "bin/lilbro" }
-  , "main": "lib/lilbro"
+  },
+  "bin": {
+    "lilbro": "bin/lilbro"
+  },
+  "main": "lib/lilbro",
+  "license": "MIT"
 }
