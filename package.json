@@ -1,6 +1,6 @@
 {
   "name": "lil-brother",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "optionalDependencies": {
     "zmq": "= 2.0.0"
