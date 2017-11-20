@@ -16,5 +16,22 @@
     "lilbro": "bin/lilbro"
   },
   "main": "lib/lilbro",
-  "license": "MIT"
+  "license": "MIT",
+  "description": "Track clicks and other client-side events on web pages",
+  "keywords": [
+    "clicks",
+    "lil-brother",
+    "tracker"
+  ],
+  "homepage": "https://github.com/shutterstock/lil-brother",
+  "bugs": "https://github.com/shutterstock/lil-brother/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shutterstock/lil-brother.git"
+  },
+  "contributors": [
+    "David Chester <dchester@shutterstock.com>",
+    "Richard Littauer <richard.littauer@gmail.com>",
+    "Douglas Hunter <douglashunter@gmail.com>"
+  ]
 }
